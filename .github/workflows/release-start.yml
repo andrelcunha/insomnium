@@ -44,8 +44,12 @@ jobs:
         if: github.event.inputs.channel == 'stable' && github.event.inputs.version
         run: npm --workspaces version "${{ github.event.inputs.version }}"
 
-      - name: App version (alpha/beta)
-        if: github.event.inputs.channel != 'stable'
+      - name: App version (alpha/beta, forced version)
+        if: github.event.inputs.channel != 'stable' && github.event.inputs.version
+        run: npm --workspaces version "${{ github.event.inputs.version }}"
+
+      - name: App version (alpha/beta, auto prerelease)
+        if: github.event.inputs.channel != 'stable' && !github.event.inputs.version
         run: npm --workspaces version --preid "${{ github.event.inputs.channel }}" prerelease
 
       - name: Get version
@@ -82,8 +86,12 @@ jobs:
         if: github.event.inputs.channel == 'stable' && github.event.inputs.version
         run: npm --workspaces version "${{ github.event.inputs.version }}"
 
-      - name: (Re-run) App version (alpha/beta)
-        if: github.event.inputs.channel != 'stable'
+      - name: (Re-run) App version (alpha/beta, forced version)
+        if: github.event.inputs.channel != 'stable' && github.event.inputs.version
+        run: npm --workspaces version "${{ github.event.inputs.version }}"
+
+      - name: (Re-run) App version (alpha/beta, auto prerelease)
+        if: github.event.inputs.channel != 'stable' && !github.event.inputs.version
         run: npm --workspaces version --preid "${{ github.event.inputs.channel }}" prerelease
 
       - name: Git Commit
