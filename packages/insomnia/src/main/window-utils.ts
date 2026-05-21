@@ -144,17 +144,18 @@ export function createWindow() {
       {
         label: `${MNEMONIC_SYM}Preferences`,
         click: function(_menuItem, window) {
-          if (!window || !window.webContents) {
+          const bw = window as ElectronBrowserWindow | undefined;
+          if (!bw?.webContents) {
             return;
           }
 
-          window.webContents.send('toggle-preferences');
+          bw.webContents.send('toggle-preferences');
         },
       },
       {
         label: `${MNEMONIC_SYM}Changelog`,
         click: function(_menuItem, window) {
-          if (!window || !window.webContents) {
+          if (!window) {
             return;
           }
           const href = changelogUrl();
@@ -355,11 +356,12 @@ export function createWindow() {
         label: `${MNEMONIC_SYM}Keyboard Shortcuts`,
         accelerator: 'CmdOrCtrl+Shift+?',
         click: (_menuItem, w) => {
-          if (!w || !w.webContents) {
+          const bw = w as ElectronBrowserWindow | undefined;
+          if (!bw?.webContents) {
             return;
           }
 
-          w.webContents.send('toggle-preferences-shortcuts');
+          bw.webContents.send('toggle-preferences-shortcuts');
         },
       },
       {
@@ -481,13 +483,13 @@ export function createWindow() {
       {
         label: `${MNEMONIC_SYM}Clear a model`,
         click: function(_menuItem, window) {
-          window?.webContents?.send('clear-model');
+          (window as ElectronBrowserWindow | undefined)?.webContents?.send('clear-model');
         },
       },
       {
         label: `Clear ${MNEMONIC_SYM}all models`,
         click: function(_menuItem, window) {
-          window?.webContents?.send('clear-all-models');
+          (window as ElectronBrowserWindow | undefined)?.webContents?.send('clear-all-models');
         },
       },
       {
