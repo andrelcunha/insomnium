@@ -4,16 +4,16 @@
   "productName": "Insomnium",
   "private": true,
   "description": "The Collaborative API Design Tool",
-  "homepage": "https://archgpt.dev/insomnium",
+  "homepage": "https://github.com/andrelcunha/insomnium",
   "bugs": {
-    "url": "https://github.com/ArchGPT/insomnium/issues"
+    "url": "https://github.com/andrelcunha/insomnium/issues"
   },
   "build": {
     "asar": true
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ArchGPT/insomnium.git",
+    "url": "git+https://github.com/andrelcunha/insomnium.git",
     "directory": "packages/insomnia"
   },
   "license": "MIT",
