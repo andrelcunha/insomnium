@@ -26,10 +26,10 @@ jobs:
             build-targets: "tar.gz"
     steps:
       - name: Checkout branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
           cache: 'npm'
@@ -59,12 +59,12 @@ jobs:
       #     name: ${{ matrix.os }}-package-critical-test-traces-${{ github.run_number }}
       #     path: packages/insomnia-smoke-test/traces
 
-      # - name: Upload artifacts
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     if-no-files-found: ignore
-      #     name: ${{ matrix.os }}-artifacts-${{ github.run_number }}
-      #     path: |
-      #       packages/insomnia/dist/*.exe
-      #       packages/insomnia/dist/*.tar.gz
-      #       packages/insomnia/dist/*.zip
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          if-no-files-found: ignore
+          name: ${{ matrix.os }}-artifacts-${{ github.run_number }}
+          path: |
+            packages/insomnia/dist/*.exe
+            packages/insomnia/dist/*.tar.gz
+            packages/insomnia/dist/*.zip
