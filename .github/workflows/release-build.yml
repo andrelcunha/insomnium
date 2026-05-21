@@ -45,11 +45,9 @@ jobs:
         run: npm run app-package
         env:
           NODE_OPTIONS: "--max_old_space_size=6144"
-          APPLE_ID: ${{ matrix.os == 'macos-latest' && secrets.DESIGNER_APPLE_ID || '' }}
-          APPLE_APP_SPECIFIC_PASSWORD: ${{ matrix.os == 'macos-latest' && secrets.DESIGNER_APPLE_ID_PASSWORD || '' }}
-          CSC_LINK: ${{ matrix.csc_link_secret != '' && secrets[matrix.csc_link_secret] || '' }}
-          CSC_KEY_PASSWORD:
-            ${{ matrix.csc_key_password_secret != '' && secrets[matrix.csc_key_password_secret] || ''  }}
+          # Disable code signing — no Apple Developer credentials configured.
+          # Remove this line and add CSC_LINK/CSC_KEY_PASSWORD/APPLE_ID secrets to enable signing.
+          CSC_IDENTITY_AUTO_DISCOVERY: "false"
 
       - name: Package app (Windows and Linux)
         if: matrix.os != 'macos-latest'
