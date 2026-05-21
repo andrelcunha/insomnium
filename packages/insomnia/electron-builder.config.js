@@ -139,15 +139,21 @@ const config = {
 };
 
 const {
-  env: { BUILD_TARGETS },
+  env: { BUILD_TARGETS, BUILD_ARCH },
   platform,
 } = process;
+const PLATFORM_MAP = { darwin: "mac", linux: "linux", win32: "win" };
 const targets = BUILD_TARGETS?.split(",");
 if (platform && targets) {
   console.log("overriding build targets to: ", targets);
-  const PLATFORM_MAP = { darwin: "mac", linux: "linux", win32: "win" };
   config[PLATFORM_MAP[platform]].target = config[
     PLATFORM_MAP[platform]
   ].target.filter(({ target }) => targets.includes(target));
+}
+if (platform && BUILD_ARCH) {
+  console.log("overriding build arch to: ", BUILD_ARCH);
+  config[PLATFORM_MAP[platform]].target = config[
+    PLATFORM_MAP[platform]
+  ].target.map(t => ({ ...t, arch: BUILD_ARCH }));
 }
 module.exports = config;
