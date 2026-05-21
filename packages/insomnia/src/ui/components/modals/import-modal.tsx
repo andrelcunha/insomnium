@@ -124,10 +124,14 @@ const FileView = styled.div({
   width: '100%',
 });
 
+interface ElectronFile extends File {
+  path: string;
+}
+
 const FileField: FC = () => {
   const id = useId();
   const dropRef = useRef<HTMLLabelElement>(null);
-  const [selectedFile, setSelectedFile] = useState<File | undefined>();
+  const [selectedFile, setSelectedFile] = useState<ElectronFile | undefined>();
   const { isDropTarget, dropProps } = useDrop({
     ref: dropRef,
     onDrop: async event => {
@@ -137,14 +141,14 @@ const FileField: FC = () => {
           : undefined;
 
       if (file) {
-        setSelectedFile(file);
+        setSelectedFile(file as ElectronFile);
       }
     },
   });
   return (
     <div>
       <FileInput
-        onChange={e => setSelectedFile(e.currentTarget.files?.[0])}
+        onChange={e => setSelectedFile(e.currentTarget.files?.[0] as ElectronFile | undefined)}
         accept={[
           '',
           'sh',
