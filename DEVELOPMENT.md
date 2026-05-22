@@ -12,7 +12,7 @@ There are a few more technologies and tools worth mentioning:
 - [`styled-components`](https://styled-components.com/) and [`Less`](http://lesscss.org/) are used for styling UI components.
 - [`Electron Builder`](https://github.com/electron-userland/electron-builder) is used to help build, sign, and package Insomnium for distribution.
 - [`libcurl`](https://curl.se/libcurl/) is the library that Insomnium uses to make requests. We used libcurl as our HTTP client of choice because it allows the deepest amount of debuggability and control of HTTP requests.
-- [`NeDB`](https://github.com/louischatriot/nedb) a local in-memory database.
+- [`@seald-io/nedb`](https://github.com/seald-io/nedb) a local in-memory database (maintained fork of the original NeDB).
 - [`node-libcurl`](https://github.com/JCMais/node-libcurl) is a Node.js wrapper around the native libcurl library.
 - [`CodeMirror`](https://codemirror.net/) is a web-based, extendable, code editor used for highlighting and linting of data formats like JSON, GraphQL, and XML.
 - [`Commander.js`](https://github.com/tj/commander.js) is used for building the Inso CLI.
@@ -47,7 +47,7 @@ Insomnium stores data in a few places:
 - localstorage
 - a fake localstorage api that writes to file and is used for window sizing
 
-> Note: NeDB is officially unmaintained (even for critical security bugs) and was last published in February 2016. Due to this, we hope to move away from it, however doing so is tricky because of how deeply tied it is to our architecture.
+> Note: Insomnium uses `@seald-io/nedb`, an actively maintained fork of the original NeDB with security fixes and TypeScript support.
 
 ## Automated testing
 
@@ -81,7 +81,7 @@ This is just a brief summary of Insomnium's current technical debt.
 - [x] styling vision (react-aria + tailwind)
 - [ ] de-polymorph database
 - [ ] codemirror is unmaintained
-- [ ] nedb is unmaintained
+- [x] nedb is unmaintained (migrated to @seald-io/nedb 4.x)
 - [ ] grpc state state should be in main rather than renderer
 - [ ] drag and drop is flakey
 - [ ] sync code is spaghetti
