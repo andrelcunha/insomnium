@@ -83,6 +83,7 @@ const config = {
     ],
   },
   win: {
+    publisherName: "André Cunha",
     target: [
       {
         target: "squirrel",
