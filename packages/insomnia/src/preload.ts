@@ -1,4 +1,4 @@
-import { contextBridge, ipcRenderer } from 'electron';
+import { contextBridge, ipcRenderer, webUtils } from 'electron';
 
 import { gRPCBridgeAPI } from './main/ipc/grpc';
 import { CurlBridgeAPI } from './main/network/curl';
@@ -81,6 +81,9 @@ const clipboard: Window['clipboard'] = {
   writeText: options => ipcRenderer.send('writeText', options),
   clear: () => ipcRenderer.send('clear'),
 };
+const electronWebUtils: Window['webUtils'] = {
+  getPathForFile: file => webUtils.getPathForFile(file),
+};
 
 if (process.contextIsolated) {
   contextBridge.exposeInMainWorld('main', main);
@@ -88,10 +91,12 @@ if (process.contextIsolated) {
   contextBridge.exposeInMainWorld('app', app);
   contextBridge.exposeInMainWorld('shell', shell);
   contextBridge.exposeInMainWorld('clipboard', clipboard);
+  contextBridge.exposeInMainWorld('webUtils', electronWebUtils);
 } else {
   window.main = main;
   window.dialog = dialog;
   window.app = app;
   window.shell = shell;
   window.clipboard = clipboard;
+  window.webUtils = electronWebUtils;
 }

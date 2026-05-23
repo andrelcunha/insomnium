@@ -124,14 +124,16 @@ const FileView = styled.div({
   width: '100%',
 });
 
-interface ElectronFile extends File {
-  path: string;
-}
-
 const FileField: FC = () => {
   const id = useId();
   const dropRef = useRef<HTMLLabelElement>(null);
-  const [selectedFile, setSelectedFile] = useState<ElectronFile | undefined>();
+  const [selectedFile, setSelectedFile] = useState<{ name: string; path: string } | undefined>();
+
+  const resolveFile = (file: File) => {
+    const path = window.webUtils.getPathForFile(file);
+    setSelectedFile({ name: file.name, path });
+  };
+
   const { isDropTarget, dropProps } = useDrop({
     ref: dropRef,
     onDrop: async event => {
@@ -141,14 +143,19 @@ const FileField: FC = () => {
           : undefined;
 
       if (file) {
-        setSelectedFile(file as ElectronFile);
+        resolveFile(file);
       }
     },
   });
   return (
     <div>
       <FileInput
-        onChange={e => setSelectedFile(e.currentTarget.files?.[0] as ElectronFile | undefined)}
+        onChange={e => {
+          const file = e.currentTarget.files?.[0];
+          if (file) {
+            resolveFile(file);
+          }
+        }}
         accept={[
           '',
           'sh',
@@ -211,6 +218,7 @@ const FileField: FC = () => {
             <input type="hidden" name="filePath" value={selectedFile.path} />
           </Fragment>
         )}
+
       </FileInputLabel>
     </div>
   );
